@@ -1,0 +1,20 @@
+public CSVRecord coldestHourInFile (CSVParser parser) {
+//start with smallestSoFar as nothing
+CSVRecord smallestSoFar = null;
+//for each row (currentRow) int the CSV file
+for (CSVRecord currentRow: parser) {
+//if smallestSoFar is nothing
+if (smallestSoFar == null) {
+//set smallestSoFar to the currentRowsmallestSoFar = currentRow;}
+//otherwise
+else {
+double currentTemp = Double.parseDouble(currentRow.get("TemperatureF"));
+double smallestTemp = Double.parseDouble(smallestSoFar.get("TemperatureF"));
+if (currentTemp < smallestTemp) {
+//if so, update smallestSoFar to currentRowsmallestSoFar = currentRow;
+   }
+  }
+}
+//the smallestSoFar is the answer
+ return smallestSoFar;
+}
