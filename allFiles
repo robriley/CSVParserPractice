@@ -1,0 +1,63 @@
+import org.apache.commons.csv.*;
+import edu.duke.*;
+import org.apache.commons.csv.*;
+import java.io.*;
+
+/**
+ * Write a description of class coldestInManyDays here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class coldestInManyDays{
+    public CSVRecord coldestHourInFile (CSVParser parser) {
+      //start with smallestSoFar as nothing
+     CSVRecord smallestSoFar = null;
+    //for each row (currentRow) int the CSV file
+     for (CSVRecord currentRow: parser) {
+         //if smallestSoFar is nothing
+           if (smallestSoFar == null) {
+         //set smallestSoFar to the currentRowsmallestSoFar = currentRow;}
+        //otherwise
+          }else {
+         double currentTemp = Double.parseDouble(currentRow.get("TemperatureF"));
+        double smallestTemp = Double.parseDouble(smallestSoFar.get("TemperatureF"));
+        if (currentTemp < smallestTemp) {
+         //if so, update smallestSoFar to currentRowsmallestSoFar = currentRow;
+          }
+        }
+      }
+       //the smallestSoFar is the answer
+     return smallestSoFar;
+      }
+  public CSVRecord coldestInManyDays() {
+   CSVRecord smallestSoFar = null;
+   DirectoryResource dr = new DirectoryResource();
+   String file = "";
+   for (File f:dr.selectedFiles()){
+      FileResource fr = new FileResource(f);
+      CSVRecord currentRow = coldestHourInFile(fr.getCSVParser());
+      if (smallestSoFar == null) {
+         smallestSoFar = currentRow;
+         file = f.getAbsolutePath();
+      } else 
+       if (smallestSoFar.equals("-9999")){
+         continue;  
+      }
+      {
+      double currentTemp = Double.parseDouble(currentRow.get("TemperatureF"));
+      double smallestTemp = Double.parseDouble(smallestSoFar.get("TemperatureF"));
+      if (currentTemp < smallestTemp) {
+       smallestSoFar = currentRow;
+       file= f.getAbsolutePath();
+       }
+     }
+   }
+    System.out.println(file);
+    return smallestSoFar;
+  }
+  public void testColdestInManyDays(){
+      CSVRecord coldest = coldestInManyDays();
+      System.out.println(coldest);
+   }
+}
