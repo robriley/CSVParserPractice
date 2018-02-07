@@ -1,0 +1,22 @@
+public CSVRecord coldestInManyDays() {
+CSVRecord smallestSoFar = null;
+DirectoryResource dr = new DirectoryResource();
+String file = "";
+for (File f : dr.selectedFiles()){
+FileResource fr = new FileResource(f);
+CSVRecord currentRow = coldestHourInFile(fr.getCSVParser());
+if (smallestSoFar == null) {
+smallestSoFar = currentRow;
+file = f.getAbsolutePath();
+} else {
+double currentTemp = Double.parseDouble(currentRow.get("TemperatureF"));
+double smallestTemp = Double.parseDouble(smallestSoFar.get("TemperatureF"));
+if (currentTemp < smallestTemp) {
+smallestSoFar = currentRow;
+file= f.getAbsolutePath();
+   }
+  }
+}
+System.out.println(file);
+return smallestSoFar;
+}
